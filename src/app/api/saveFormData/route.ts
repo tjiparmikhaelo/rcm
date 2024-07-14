@@ -1,10 +1,16 @@
 import { PrismaClient } from '@prisma/client';
 
+interface RequestData {
+  finalStep: string;
+  assetProfileId: string;
+}
 const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
   try {
-    const { finalStep, assetProfileId } = await req.json();
+    const body: RequestData = await req.json();
+
+    const { finalStep, assetProfileId } = body;
 
     // Validate finalStep and assetProfileId
     if (!finalStep || !assetProfileId) {

@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
-    "lib": ["es5", "es6"],
+    "lib": [
+      "es5",
+      "es6",
+      "DOM"
+    ],
     "target": "es5",
     "allowJs": true,
     "esModuleInterop": true,
@@ -14,14 +18,26 @@
     "sourceMap": false,
     "outDir": "./dist",
     "rootDir": "src",
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "strict": false,
+    "noEmit": true,
+    "incremental": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["src"],
+  "include": [
+    "src/**/*", // Include all files in the src directory
+    ".next/types/**/*.ts"
+    // Other paths to include
+  ],
   "exclude": [
-    "dist",
-    "src/**/__tests__",
-    "src/**/__mocks__",
-    "src/**/__fixtures__",
-    "node_modules"
+    "node_modules", // Exclude node_modules
+    ".next" // Exclude the .next directory
   ]
 }
