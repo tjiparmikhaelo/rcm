@@ -8,7 +8,7 @@ const Page = () => {
   const [formData, setFormData] = useState({});
   const router = useRouter();
 
-  const handleOptionChange = (step, value) => {
+  const handleOptionChange = (step: string, value: string) => {
     setFormData(prev => ({ ...prev, [step]: value }));
     switch(step) {
       case 'CCR':
