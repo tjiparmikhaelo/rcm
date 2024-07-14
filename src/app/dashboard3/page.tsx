@@ -51,7 +51,7 @@ const Page = () => {
     }
   }, [currentStep]);
   
-  const saveFormData = async (finalStep) => {
+  const saveFormData = async (finalStep: string) => {
     try {
       const assetProfileId = localStorage.getItem("assetProfileId");
       const response = await fetch('/api/saveFormData', {
