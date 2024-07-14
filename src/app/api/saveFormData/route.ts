@@ -6,9 +6,12 @@ export async function POST(req: Request) {
   try {
     const { finalStep, assetProfileId } = await req.json();
 
-    // Validate finalStep here if needed
-    if (!finalStep) {
-      return new Response(JSON.stringify({ error: 'Final step is required' }), { status: 400 });
+    // Validate finalStep and assetProfileId
+    if (!finalStep || !assetProfileId) {
+      return new Response(
+        JSON.stringify({ error: 'Final step and asset profile ID are required' }),
+        { status: 400 }
+      );
     }
 
     // Save the final step to the database
@@ -17,17 +20,20 @@ export async function POST(req: Request) {
         id: assetProfileId,
       },
       data: {
-        task_type: finalStep, // assuming the field in your database is named final_step
+        task_type: finalStep, // assuming the field in your database is named task_type
       },
     });
 
     // Respond with the saved data
     return new Response(JSON.stringify(savedData), { status: 200 });
   } catch (error) {
-    if (error instanceof Error) {
-      return new Response(JSON.stringify({ error: 'Error saving data', details: error.message }), { status: 500 });
-    } else {
-      return new Response(JSON.stringify({ error: 'Unknown error occurred' }), { status: 500 });
-    }
+    console.error('Error saving data:', error);
+    return new Response(
+      JSON.stringify({
+        error: 'Error saving data',
+        details: error instanceof Error ? error.message : 'Unknown error',
+      }),
+      { status: 500 }
+    );
   }
 }
