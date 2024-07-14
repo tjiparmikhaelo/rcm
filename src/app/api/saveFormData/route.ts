@@ -24,7 +24,10 @@ export async function POST(req: Request) {
     // Respond with the saved data
     return new Response(JSON.stringify(savedData), { status: 200 });
   } catch (error) {
-    console.error('Error saving final step:', error);
-    return new Response(JSON.stringify({ error: 'Error saving data', details: error.message }), { status: 500 });
+    if (error instanceof Error) {
+      return new Response(JSON.stringify({ error: 'Error saving data', details: error.message }), { status: 500 });
+    } else {
+      return new Response(JSON.stringify({ error: 'Unknown error occurred' }), { status: 500 });
+    }
   }
 }

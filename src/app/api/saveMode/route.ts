@@ -19,7 +19,10 @@ export async function POST(req: Request) {
 
     return NextResponse.json(updatedProfile, { status: 200 });
   } catch (error) {
-    console.error('Error updating failure mode:', error);
-    return NextResponse.json({ error: 'Error updating failure mode' }, { status: 500 });
+    if (error instanceof Error) {
+      return new Response(JSON.stringify({ error: 'Error saving data', details: error.message }), { status: 500 });
+    } else {
+      return new Response(JSON.stringify({ error: 'Unknown error occurred' }), { status: 500 });
+    }
   }
 }
