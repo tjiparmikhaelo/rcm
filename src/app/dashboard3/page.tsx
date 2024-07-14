@@ -43,23 +43,23 @@ const Page = () => {
   useEffect(() => {
     const finalSteps = ['OTC', 'RTF', 'STOP', 'RDS', 'PM', 'FF'];
     if (finalSteps.includes(currentStep)) {
-      // Save form data to database here
-      saveFormData();
-
+      // Save the final step to the database
+      saveFormData(currentStep);
+  
       // Redirect to the next page
       router.push('/dashboard4');
     }
   }, [currentStep]);
-
-  const saveFormData = async () => {
+  
+  const saveFormData = async (finalStep) => {
     try {
-      const assetProfileId = localStorage.getItem("assetProfileId")
+      const assetProfileId = localStorage.getItem("assetProfileId");
       const response = await fetch('/api/saveFormData', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ formData, assetProfileId }),
+        body: JSON.stringify({ finalStep, assetProfileId }),
       });
   
       if (!response.ok) {
@@ -70,7 +70,8 @@ const Page = () => {
     } catch (error) {
       console.error('Error:', error);
     }
-  };  
+  };
+    
 
   const renderStep = () => {
     switch(currentStep) {

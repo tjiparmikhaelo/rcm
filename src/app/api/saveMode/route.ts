@@ -1,34 +1,25 @@
-// app/api/saveMode/route.js
-
+import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export async function POST(req) {
+export async function POST(req: Request) {
   try {
-    const { failure_mode, assetProfileId } = await req.json();
+    const body = await req.json();
+    const { assetProfileId, failureMode } = body;
 
-    if (!failure_mode) {
-      console.error('Failure Mode is missing in the request body');
-      return new Response(JSON.stringify({ error: 'Failure Mode is required' }), { status: 400 });
+    if (!assetProfileId || !failureMode) {
+      return NextResponse.json({ error: 'Missing assetProfileId or failureMode' }, { status: 400 });
     }
 
-    console.log('Received failure_mode:', failure_mode);
-
-    const failureMode = await prisma.asset_profile.update({
-      where: {
-        id: assetProfileId
-      },
-      data: { 
-        failure_mode 
-      },
+    const updatedProfile = await prisma.asset_profile.update({
+      where: { id: assetProfileId },
+      data: { failure_mode: failureMode },
     });
 
-    console.log('Successfully saved mode:', failureMode);
-
-    return new Response(JSON.stringify(failureMode), { status: 200 });
+    return NextResponse.json(updatedProfile, { status: 200 });
   } catch (error) {
-    console.error('Error in API route:', error);
-    return new Response(JSON.stringify({ error: 'Error saving mode', details: error.message }), { status: 500 });
+    console.error('Error updating failure mode:', error);
+    return NextResponse.json({ error: 'Error updating failure mode' }, { status: 500 });
   }
 }

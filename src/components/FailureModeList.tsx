@@ -11,10 +11,9 @@ export default function FailureModeList({ failureModes, failureCount }) {
   const router = useRouter();
 
   useEffect(() => {
-    const id = localStorage.getItem('assetProfileId')
-
-    console.log(id)
-  }, [])
+    const id = localStorage.getItem('assetProfileId');
+    console.log(id);
+  }, []);
 
   const handleSelectMode = (failure_mode) => {
     setSelectedMode(failure_mode);
@@ -25,28 +24,31 @@ export default function FailureModeList({ failureModes, failureCount }) {
       console.log('No mode selected');
       return;
     }
-
+  
     setIsLoading(true);
     console.log('Saving mode:', selectedMode);
-
+  
     try {
-      const assetProfileId = localStorage.getItem("assetProfileId")
-      const res = await fetch('/api/saveMode', {
+      const assetProfileId = localStorage.getItem('assetProfileId');
+      console.log('Asset Profile ID:', assetProfileId);
+  
+      const response = await fetch('/api/saveMode', {  // Ensure the URL is correct
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ failure_mode: selectedMode, assetProfileId }),
+        body: JSON.stringify({ assetProfileId, failureMode: selectedMode }),
       });
-
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.error || 'Error saving mode');
+  
+      console.log('Fetch Response:', response);
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-
-      const data = await res.json();
+  
+      const data = await response.json();
       console.log('Saved data:', data);
-
+  
       // Navigate to the next page after saving
       router.push('/dashboard3');
     } catch (error) {
@@ -54,7 +56,7 @@ export default function FailureModeList({ failureModes, failureCount }) {
     } finally {
       setIsLoading(false);
     }
-  };
+  };  
 
   return (
     <div className="box-border p-10 pt-40 pb-[384px] pl-[419px] pr-[420px] flex flex-col gap-2 items-center justify-center relative bg-center bg-cover bg-no-repeat custom-background">
