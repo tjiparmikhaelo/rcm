@@ -1,6 +1,6 @@
 "use client"
 
-import { create } from "@/actions/actions";
+import { create } from "../../actions/actions";
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation";
 

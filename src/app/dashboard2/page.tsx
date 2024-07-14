@@ -1,7 +1,5 @@
-// app/page.js (or app/index.js)
-
 import { PrismaClient } from '@prisma/client';
-import FailureModeList from '@/components/FailureModeList';
+import FailureModeList from '../../components/FailureModeList';
 
 const prisma = new PrismaClient();
 
