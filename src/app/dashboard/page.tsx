@@ -1,5 +1,6 @@
 "use client"
 
+import React from "react";
 import { create } from "../../actions/actions";
 import { Button } from "../../components/ui/button"
 import { useRouter } from "next/navigation";
@@ -7,11 +8,10 @@ import { useRouter } from "next/navigation";
 const Page = () => {
   const router = useRouter()
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const formData = new FormData(e.target)
-
+    const formData = new FormData(e.currentTarget)
     try {
       const assetProfileId = await create(formData)
       localStorage.setItem("assetProfileId", assetProfileId)
