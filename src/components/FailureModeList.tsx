@@ -4,9 +4,10 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '../components/ui/button';
+import { FailureModeType } from "../types/failureModeType"
 
-export default function FailureModeList({ failureModes, failureCount }) {
-  const [selectedMode, setSelectedMode] = useState(null);
+export default function FailureModeList({ failureModes, failureCount }: { failureModes: FailureModeType, failureCount: number }) {
+  const [selectedMode, setSelectedMode] = useState<null | string>(null);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
@@ -15,7 +16,7 @@ export default function FailureModeList({ failureModes, failureCount }) {
     console.log(id);
   }, []);
 
-  const handleSelectMode = (failure_mode) => {
+  const handleSelectMode = (failure_mode: string) => {
     setSelectedMode(failure_mode);
   };
 
