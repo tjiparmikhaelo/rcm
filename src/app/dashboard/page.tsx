@@ -11,10 +11,10 @@ const Page = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const formData = new FormData(e.currentTarget)
+    const formData = new FormData()
     try {
       const assetProfileId = await create(formData)
-      localStorage.setItem("assetProfileId", assetProfileId)
+      window.localStorage.setItem("assetProfileId", assetProfileId);
 
       router.push('/dashboard2')
     } catch (error) {

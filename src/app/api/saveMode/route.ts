@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
+    const body: any = await req.json();
     const { assetProfileId, failureMode } = body;
 
     if (!assetProfileId || !failureMode) {
