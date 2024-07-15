@@ -1,5 +1,5 @@
 export type FailureModeType = {
   id?: string
-  task_type?: string
+  item_no?: string
   failure_mode: string
 }[]

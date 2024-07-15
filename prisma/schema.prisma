@@ -15,7 +15,7 @@ datasource db {
 
 model failure_mode {
   id String @id @default(cuid())
-  task_type String
+  item_no String?
   failure_mode String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -36,9 +36,9 @@ model asset_profile {
 
 model current_risk {
   id String @id @default(cuid())
-  cof String
-  pof String
-  current_risk String
+  cof String?
+  pof String?
+  current_risk String?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }

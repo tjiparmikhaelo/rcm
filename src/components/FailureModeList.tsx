@@ -94,7 +94,7 @@ export default function FailureModeList({ failureModes, failureCount }: { failur
                       }`}
                       onClick={() => handleSelectMode(failureMode.failure_mode)}
                     >
-                      {failureMode.failure_mode}
+                      {failureMode.item_no}{" "}{failureMode.failure_mode}
                     </li>
                   ))}
                 </ul>
